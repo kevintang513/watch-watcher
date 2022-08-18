@@ -166,13 +166,20 @@ GitHub.sublime-settings
 
 ### Folders ###
 backup/*
-data/*
+data/images/*
+data/scraped/*
 results/*
 plots/*
 images/*
 
+### Mac Finder Metadata ###
+.DS_Store
+
 ### Exceptions ###
 !data/.gitkeep
+!data/images/.gitkeep
+!data/scraped/.gitkeep
+
 !results/.gitkeep
 !plots/.gitkeep
 !images/.gitkeep
