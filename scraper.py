@@ -8,28 +8,21 @@ import csv
 from datetime import datetime
 import re
 from glob import glob
-from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+from fake_useragent import UserAgent
+
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
-import urllib
-import requests
-
-import numpy as np
-import pandas as pd
-import plotly.graph_objects as go
-from rich import print
-from scipy import constants
-
-PATH = "/Users/kevintang/chromedriver"
-
-driver = webdriver.Chrome(PATH)
 
 BRANDS = [
     'rolex',
-    # 'omega',
+    'omega',
     # 'tagheuer',
     # 'seiko',
     # 'patekphilippe',
@@ -45,50 +38,64 @@ BRANDS = [
     # 'richardmille',
 ]
 
-for brand in BRANDS:
+# using different user agents in order to resolve invalid session id
+options = Options()
+ua = UserAgent()
+userAgent = ua.random
+options.add_argument(f'user-agent={userAgent}')
 
+for brand in BRANDS:
     urls = [
         f'https://www.chrono24.com/{brand}/index.htm',
-        # f'https://www.chrono24.com/{brand}/index-2.htm',
-        # f'https://www.chrono24.com/{brand}/index-3.htm',
-        # f'https://www.chrono24.com/{brand}/index-4.htm',
-        # f'https://www.chrono24.com/{brand}/index-5.htm',
+        f'https://www.chrono24.com/{brand}/index-2.htm',
+        f'https://www.chrono24.com/{brand}/index-3.htm',
+        f'https://www.chrono24.com/{brand}/index-4.htm',
+        f'https://www.chrono24.com/{brand}/index-5.htm',
+        f'https://www.chrono24.com/{brand}/index-6.htm',
     ]
-
     data = []
 
     for url in urls:
+        driver = webdriver.Chrome(service=Service(
+            ChromeDriverManager().install()), options=options)
+        #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+        actions = ActionChains(driver)
         driver.get(url)
         button = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//button[@data-label = 'accept-button']"))
+            EC.presence_of_element_located(
+                (By.XPATH, "//button[@data-label = 'accept-button']"))
         )
         button.click()
 
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
         for watch in WebDriverWait(driver, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".article-item-container"))):
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".article-item-container"))):
             try:
-                img_div = watch.find_element(By.CSS_SELECTOR, ".article-image-container .content img")
+                img_div = watch.find_element(
+                    By.CSS_SELECTOR, ".article-image-container .content img")
             except NoSuchElementException:
                 continue
             try:
-                price_text = watch.find_element(By.CSS_SELECTOR, ".article-price strong").text
+                price_text = watch.find_element(
+                    By.CSS_SELECTOR, ".article-price strong").text
             except NoSuchElementException:
                 continue
 
-            #skip entries without both picture and price
+            # skip entries without both picture and price
             if (not img_div or not price_text):
                 continue
             price = re.sub("[^0-9]", "", price_text)
-            img_url = img_div.get_attribute('data-lazy-sweet-spot-master-src')
+            # must mouse over images to properly retrieve link
+            actions.move_to_element(img_div).perform()
+            img_url = img_div.get_attribute('src')
             if (not price or not img_url):
                 continue
-            data.append([img_url,price])
-                    
+            # print(img_url)
+            data.append([img_url, price])
+        driver.close()
     with open(f'data/scraped/{brand}.csv', 'w') as file:
         writer = csv.writer(file, delimiter=',')
         writer.writerows(data)
-
-
-
+    print(f'{brand} data saved!')

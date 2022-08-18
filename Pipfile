@@ -18,6 +18,8 @@ scipy = "*"
 tqdm = "*"
 selenium = "*"
 beautifulsoup4 = "*"
+webdriver-manager = "*"
+fake-useragent = "*"
 
 [dev-packages]
 autopep8 = "*"
