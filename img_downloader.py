@@ -11,19 +11,19 @@ urllib.request.install_opener(opener)
 BRANDS = [
     'rolex',
     'omega',
-    # 'tagheuer',
-    # 'seiko',
-    # 'patekphilippe',
-    # 'cartier',
-    # 'iwc',
-    # 'jaegerlecoultre',
-    # 'vacheronconstantin',
-    # 'hamilton',
-    # 'oris',
-    # 'audemarspiguet',
-    # 'tudor',
-    # 'longines',
-    # 'richardmille',
+    'tagheuer',
+    'seiko',
+    'patekphilippe',
+    'cartier',
+    'iwc',
+    'jaegerlecoultre',
+    'vacheronconstantin',
+    'hamilton',
+    'oris',
+    'audemarspiguet',
+    'tudor',
+    'longines',
+    'richardmille',
 ]
 
 for brand in BRANDS:
@@ -33,5 +33,7 @@ for brand in BRANDS:
         index = 0
         for row in reader:
             #print(row[0], index, row[1])
-            urllib.request.urlretrieve(row[0], f'data/images/{brand}/{brand}-{index}-{row[1]}.jpg')
+            urllib.request.urlretrieve(
+                row[0], f'data/images/{brand}/{brand}-{index}-{row[1]}.jpg')
             index += 1
+    print(f'{brand} images saved!')

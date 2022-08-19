@@ -1,18 +1,15 @@
-import dataclasses
-from inspect import getmembers
 import os
-import pickle
-import sys
 import time
 import csv
-from datetime import datetime
 import re
-from glob import glob
+
+from datetime import datetime
+from webdriver_manager.chrome import ChromeDriverManager
+from fake_useragent import UserAgent
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
-from fake_useragent import UserAgent
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -23,19 +20,19 @@ from selenium.common.exceptions import NoSuchElementException
 BRANDS = [
     'rolex',
     'omega',
-    # 'tagheuer',
-    # 'seiko',
-    # 'patekphilippe',
-    # 'cartier',
-    # 'iwc',
-    # 'jaegerlecoultre',
-    # 'vacheronconstantin',
-    # 'hamilton',
-    # 'oris',
-    # 'audemarspiguet',
-    # 'tudor',
-    # 'longines',
-    # 'richardmille',
+    'tagheuer',
+    'seiko',
+    'patekphilippe',
+    'cartier',
+    'iwc',
+    'jaegerlecoultre',
+    'vacheronconstantin',
+    'hamilton',
+    'oris',
+    'audemarspiguet',
+    'tudor',
+    'longines',
+    'richardmille',
 ]
 
 # using different user agents in order to resolve invalid session id
@@ -60,14 +57,17 @@ for brand in BRANDS:
             ChromeDriverManager().install()), options=options)
         #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-        actions = ActionChains(driver)
+        actions = ActionChains(driver)  # used for mouse-over action
         driver.get(url)
+
+        # accepting data agreement/cookies
         button = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(
                 (By.XPATH, "//button[@data-label = 'accept-button']"))
         )
         button.click()
 
+        # scroll to bottom and in order to load images
         driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
         for watch in WebDriverWait(driver, 10).until(
