@@ -171,6 +171,10 @@ data/scraped/*
 results/*
 plots/*
 images/*
+models/*
+
+### Sanity Check functions ###
+sizer.py
 
 ### Mac Finder Metadata ###
 .DS_Store
@@ -179,6 +183,7 @@ images/*
 !data/.gitkeep
 !data/images/.gitkeep
 !data/scraped/.gitkeep
+!application/.gitkeep
 
 !results/.gitkeep
 !plots/.gitkeep
