@@ -168,7 +168,6 @@ GitHub.sublime-settings
 backup/*
 data/images/*
 data/scraped/*
-results/*
 plots/*
 images/*
 models/*
@@ -184,7 +183,8 @@ sizer.py
 !data/images/.gitkeep
 !data/scraped/.gitkeep
 !application/.gitkeep
-
+!results/classifier-confusion-matrix.png
+!mo
 !results/.gitkeep
 !plots/.gitkeep
 !images/.gitkeep
