@@ -20,6 +20,11 @@ selenium = "*"
 beautifulsoup4 = "*"
 webdriver-manager = "*"
 fake-useragent = "*"
+flask = "*"
+fastai = "*"
+torch = "*"
+torchvision = "*"
+opencv-python = "*"
 
 [dev-packages]
 autopep8 = "*"
