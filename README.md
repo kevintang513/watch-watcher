@@ -4,7 +4,7 @@ This is a program that takes an image of a watch and can predict the watch's bra
 ## Detailed Project Description and Overview
 This is a program that takes an image of a watch and can predict the watch's brand and the price in the online watch market. It can identify and predict the price of 15 popular luxury watch brands. The application consists of a classification and regression model. 
 
-The two models were trained on data scraped from chrono24.com and built with transfer learning using the ResNet50 architecture. Around 300 watch images from each of the 15 selected brands were used to train the models. The building and training of both models was done using Paperspace cloud computing. 
+The two models were trained on data scraped from chrono24.com and built with transfer learning using ResNet50 neural networks. Around 300 watch images from each of the 15 selected brands were used to train the models. The building and training of both models was done using Paperspace cloud computing. 
 
 The application is currently hosted on Hugging Face and was built using Gradio.
 ## Results
