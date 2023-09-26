@@ -1,6 +1,6 @@
 # Watch Watcher
 This is a program that takes an image of a watch and can predict the watch's brand and the price on the online watch market. 
-~~You can access it here: https://huggingface.co/spaces/kevintang513/watch-watcher~~ Currently experiencing dependency issues causing build failure within the interface on huggingface.
+~~You can access it here: https://huggingface.co/spaces/kevintang513/watch-watcher~~ NOTE: Online interface currently experiencing dependency issues causing build failure on huggingface. Models still working properly if run locally or accessed via `app-tester.ipynb`
 
 ## Detailed Project Description and Overview
 This is a program that takes an image of a watch and can predict the watch's brand and the price in the online watch market. It can identify and predict the price of 15 popular luxury watch brands. The application consists of a classification and regression model. 
